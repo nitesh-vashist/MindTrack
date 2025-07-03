@@ -1,14 +1,22 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import DarkModeToggle from "./components/DarkModeToggle";
+import TrackDetails from './pages/TrackDetails';
+import Dashboard from './pages/Dashboard';
 
-
-function App() {
-  
-
+const App = () => {
   return (
     <>
-     <div className='text-3xl text-center shadow-lg p-4 bg-white rounded-lg mt-4'>FlowResume</div>
+      <DarkModeToggle />
+      <div className="min-h-screen bg-white dark:bg-zinc-900 text-zinc-800 dark:text-white">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/track/:id" element={<TrackDetails />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

@@ -3,7 +3,7 @@ import { createSlice,nanoid } from "@reduxjs/toolkit";
 const initialState = {
     tracks: [
     {
-        id: 1,
+        id: "1",
         name: "React YouTube Series",
         type: "YouTube", // or Book, Course, Playlist, Sheet
         source: "https://youtube.com/playlist...", // optional
@@ -17,7 +17,7 @@ const initialState = {
     ],
 
     sessions:{
-        1:[
+        "1":[
              {
         id: nanoid(),
         lectureNumber: 12,
