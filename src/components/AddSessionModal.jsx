@@ -117,7 +117,7 @@ const AddSessionModal = ({ trackId, closeModal }) => {
           />
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">
             Status
           </label>
@@ -128,7 +128,23 @@ const AddSessionModal = ({ trackId, closeModal }) => {
             placeholder="e.g. Understood, Confused"
             className="w-full p-2 border rounded mt-1 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
           />
-        </div>
+        </div> */}
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">
+              Status
+            </label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full p-2 border rounded mt-1 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+            >
+              <option value="">Select Status</option>
+              <option value="Completed">Completed</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Not Started">Not Started</option>
+            </select>
+          </div>
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">

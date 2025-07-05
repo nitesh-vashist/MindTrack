@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import AddSessionModal from '../components/AddSessionModal'; // Make sure this file exists
-
+import AddSessionModal from '../components/AddSessionModal'; 
+import EditSessionModal from '../components/EditSessionModal';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -15,6 +15,19 @@ const TrackDetails = () => {
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    const [isEditSessionOpen, setIsEditSessionOpen] = useState(false);
+    const [editingSessionId, setEditingSessionId] = useState(null);
+
+    const openEditSessionModal = (sessionId) => {
+      setEditingSessionId(sessionId);
+      setIsEditSessionOpen(true);
+    };
+    const closeEditSessionModal = () => {
+      setIsEditSessionOpen(false);
+      setEditingSessionId(null); // Clear the previously selected session
+    }; 
+
 
 
   if (!track) {
@@ -80,6 +93,7 @@ const TrackDetails = () => {
                       Watched: {session.watchedTime} mins • Status: {session.status}
                     </p>
                   </div>
+                  <button className='mx-2 text-blue-500' onClick={() => openEditSessionModal(session.id)}>Edit</button>
                   <span className="text-xs text-zinc-400">{session.watchedDate}</span>
                 </div>
                 {session.notes && (
@@ -110,7 +124,16 @@ const TrackDetails = () => {
         {isModalOpen && (
         <AddSessionModal trackId={track.id} closeModal={closeModal} />
         )}
-
+        {isEditSessionOpen && (
+          <EditSessionModal
+            trackId={track.id}
+            sessionData={sessions.find(session => session.id === editingSessionId)}
+            closeModal={closeEditSessionModal}
+            // isEditMode={true} // Pass this prop to indicate edit mode
+            
+            // sessions={sessions} // Pass the sessions array to the modal
+          />
+        )}
       </div>
     </div>
   );
