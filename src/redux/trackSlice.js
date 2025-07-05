@@ -131,38 +131,98 @@ export const trackSlice = createSlice({
         },
 
 
-        updateSession: (state,action)=>{
-            const {trackId,sessionId, updatedData:{lectureNumber, watchedTime, watchedDate, status, notes, tags, resumePoint} } = action.payload;
-            state.sessions[trackId] = state.sessions[trackId].map(session => {
-                if (session.id === sessionId) {
-                    return {
-                        ...session,
-                        ...updatedData
-                    };
-                }
-                return session;
-            });
+        // updateSession: (state,action)=>{
+        //     const {trackId,sessionId, updatedData} = action.payload;
+        //     state.sessions[trackId] = state.sessions[trackId].map(session => {
+        //         if (session.id === sessionId) {
+        //             return {
+        //                 ...session,
+        //                 ...updatedData
+        //             };
+        //         }
+        //         return session;
+        //     });
 
-            const track = state.tracks.find(t => t.id === trackId);
-            const sessions = state.sessions[trackId];
-            const durations = track.lectureDurations || {};
+        //     const track = state.tracks.find(t => t.id === trackId);
+        //     const sessions = state.sessions[trackId];
+        //     const durations = track.lectureDurations || {};
 
-            const completedLectures = new Set();
+        //     const completedLectures = new Set();
 
-            sessions.forEach(session => {
-                const dur = durations[session.lectureNumber] || 0;
-                if (!dur) return;
-                const percentWatched = (session.watchedTime / dur) * 100;
-                if (percentWatched >= 90) {
-                    completedLectures.add(session.lectureNumber);
-                }
-            });
+        //     sessions.forEach(session => {
+        //         const dur = durations[session.lectureNumber] || 0;
+        //         if (!dur) return;
+        //         const percentWatched = (session.watchedTime / dur) * 100;
+        //         if (percentWatched >= 90) {
+        //             completedLectures.add(session.lectureNumber);
+        //         }
+        //     });
 
-            track.progress = completedLectures.size;
-            track.isCompleted = track.progress >= track.totalLectures;
-            track.lastUpdated = new Date().toISOString();
+        //     track.progress = completedLectures.size;
+        //     track.isCompleted = track.progress >= track.totalLectures;
+        //     track.lastUpdated = new Date().toISOString();
 
+        // },
+
+        updateSession: (state, action) => {
+        const { trackId, sessionId, updatedData } = action.payload;
+
+        // 🔥 Ensure all numbers are truly numbers here:
+        const {
+            lectureNumber,
+            watchedTime,
+            watchedDate,
+            status,
+            notes,
+            tags,
+            resumePoint,
+            lectureTitle,
+            duration
+        } = updatedData;
+
+        const normalizedData = {
+            lectureNumber: Number(lectureNumber),
+            watchedTime: Number(watchedTime),
+            duration: Number(duration),
+            watchedDate,
+            status,
+            notes,
+            tags,
+            resumePoint,
+            lectureTitle
+        };
+
+        state.sessions[trackId] = state.sessions[trackId].map((session) => {
+            if (session.id === sessionId) {
+            return {
+                ...session,
+                ...normalizedData
+            };
+            }
+            return session;
+        });
+
+        const track = state.tracks.find((t) => t.id === trackId);
+        const sessions = state.sessions[trackId];
+        const durations = track.lectureDurations || {};
+
+        const completedLectures = new Set();
+
+        sessions.forEach((session) => {
+            const dur = durations[session.lectureNumber] || 0;
+            if (!dur) return;
+
+            const percentWatched = (session.watchedTime / dur) * 100;
+            if (percentWatched >= 90) {
+            completedLectures.add(session.lectureNumber);
+            }
+        });
+
+        track.progress = completedLectures.size;
+        track.isCompleted = track.progress >= track.totalLectures;
+        track.lastUpdated = new Date().toISOString();
         },
+
 
         deleteSession: (state, action) => {
             const { trackId, sessionId } = action.payload;
