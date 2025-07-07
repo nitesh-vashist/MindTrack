@@ -3,6 +3,8 @@ import AddSessionModal from '../components/AddSessionModal';
 import EditSessionModal from '../components/EditSessionModal';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { deleteSession } from '../redux/trackSlice'; // Import the delete action
+import { useDispatch } from 'react-redux';
 
 const TrackDetails = () => {
   const { id } = useParams();
@@ -28,7 +30,11 @@ const TrackDetails = () => {
       setEditingSessionId(null); // Clear the previously selected session
     }; 
 
-
+    const handleDeleteSession = (sessionId) => {
+      if (window.confirm("Are you sure you want to delete this session?")) {
+        dispatch(deleteSession(track.id, sessionId));
+      }
+    };
 
   if (!track) {
     return (
@@ -94,6 +100,7 @@ const TrackDetails = () => {
                     </p>
                   </div>
                   <button className='mx-2 text-blue-500' onClick={() => openEditSessionModal(session.id)}>Edit</button>
+                  <button className='mx-2 text-red-500' onClick={() => handleDeleteSession(session.id)}>Delete</button>
                   <span className="text-xs text-zinc-400">{session.watchedDate}</span>
                 </div>
                 {session.notes && (
