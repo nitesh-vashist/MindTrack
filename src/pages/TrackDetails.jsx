@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 const TrackDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const track = useSelector(state => state.track.tracks.find(t => t.id === id));
   const sessions = useSelector(state => state.track.sessions[id] || []);
 
@@ -32,7 +32,7 @@ const TrackDetails = () => {
 
     const handleDeleteSession = (sessionId) => {
       if (window.confirm("Are you sure you want to delete this session?")) {
-        dispatch(deleteSession(track.id, sessionId));
+        dispatch(deleteSession({ trackId: track.id, sessionId }));
       }
     };
 

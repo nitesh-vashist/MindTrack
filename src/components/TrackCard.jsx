@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deleteTrack } from '../redux/trackSlice'; // Import the delete action
 const TrackCard = ({
   id,
   name,
@@ -11,6 +13,12 @@ const TrackCard = ({
   isCompleted,
   onClick
 }) => {
+  const dispatch = useDispatch();
+  const handleDeleteTrack = (trackId) => {
+    if (window.confirm("Are you sure you want to delete this track?")) {
+      dispatch(deleteTrack({ trackId }));
+    }
+  };
   return (
     <Link to={`/track/${id}`} className="no-underline">
       
@@ -22,7 +30,14 @@ const TrackCard = ({
         <h2 className="text-xl font-bold text-zinc-800 dark:text-white">{name}</h2>
         <span className="text-sm px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded">
           {type}
+          
         </span>
+        <button   onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          handleDeleteTrack(id);
+        }} className="ml-2 text-red-500">Delete
+        </button>
       </div>
 
       <div className="text-sm text-zinc-600 dark:text-zinc-300">
