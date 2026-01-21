@@ -131,38 +131,7 @@ export const trackSlice = createSlice({
         },
 
 
-        // updateSession: (state,action)=>{
-        //     const {trackId,sessionId, updatedData} = action.payload;
-        //     state.sessions[trackId] = state.sessions[trackId].map(session => {
-        //         if (session.id === sessionId) {
-        //             return {
-        //                 ...session,
-        //                 ...updatedData
-        //             };
-        //         }
-        //         return session;
-        //     });
 
-        //     const track = state.tracks.find(t => t.id === trackId);
-        //     const sessions = state.sessions[trackId];
-        //     const durations = track.lectureDurations || {};
-
-        //     const completedLectures = new Set();
-
-        //     sessions.forEach(session => {
-        //         const dur = durations[session.lectureNumber] || 0;
-        //         if (!dur) return;
-        //         const percentWatched = (session.watchedTime / dur) * 100;
-        //         if (percentWatched >= 90) {
-        //             completedLectures.add(session.lectureNumber);
-        //         }
-        //     });
-
-        //     track.progress = completedLectures.size;
-        //     track.isCompleted = track.progress >= track.totalLectures;
-        //     track.lastUpdated = new Date().toISOString();
-
-        // },
 
         updateSession: (state, action) => {
         const { trackId, sessionId, updatedData } = action.payload;

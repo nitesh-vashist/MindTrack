@@ -12,3 +12,5 @@
 - 🌙 Fully responsive and dark mode supported
 - 🧠 Certificate eligibility system (coming soon)
 - 🧪 Edit existing sessions easily via modal interface
+
+// Time to pick up this project again and build it from scratch
