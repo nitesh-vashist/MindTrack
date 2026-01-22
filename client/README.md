@@ -14,3 +14,4 @@
 - 🧪 Edit existing sessions easily via modal interface
 
 // Time to pick up this project again and build it from scratch
+// maybe we can hold it for now
